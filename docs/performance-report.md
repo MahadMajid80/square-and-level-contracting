@@ -35,3 +35,20 @@ These are lab numbers, not field data. Re-measure on the deployed site with real
 
 - PageSpeed Insights (field + lab): <https://pagespeed.web.dev/>
 - Search Console → Core Web Vitals, once field data accrues (around 28 days).
+
+## Preloader (added 2026-11-02)
+
+A branded preloader runs on the **first page of each visit** only. It is skipped on later pages, on reloads in the same browser session, and for visitors with reduced motion turned on.
+
+Lighthouse always simulates a first visit, so it measures the preloader every time:
+
+| Metric (`/`, mobile, stand-in images) | Before | With preloader |
+|---|---|---|
+| Performance score | 91 | 74 |
+| LCP | 1.0 s | 1.1 s |
+| CLS | 0 | 0 |
+| Speed Index | — | 5.9 s |
+
+The score drops because the page is covered for about 2–3 seconds, not because it loads slower.
+
+To remove the preloader, delete `<Preloader />` and its boot `<script>` in `src/app/layout.tsx`.

@@ -69,6 +69,7 @@ export function Preloader() {
 
     const start = performance.now();
     let p = 0;
+    let shown = 0;
     let raf = 0;
     let leaveTimer = 0;
     let goneTimer = 0;
@@ -85,8 +86,11 @@ export function Preloader() {
       const x = drift * (38 * Math.sin(t / 210) + 22 * Math.sin(t / 97));
       if (bubbleRef.current)
         bubbleRef.current.style.transform = `translate3d(${x.toFixed(2)}px,0,0)`;
-      if (countRef.current)
-        countRef.current.textContent = String(Math.round(p * 100)).padStart(3, "0");
+      const pct = Math.round(p * 100);
+      if (pct !== shown && countRef.current) {
+        shown = pct; // only touch the DOM when the number actually changes
+        countRef.current.textContent = String(pct).padStart(3, "0");
+      }
       if (barRef.current) barRef.current.style.transform = `scaleX(${p})`;
 
       if (p >= 1) {
