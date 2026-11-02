@@ -40,7 +40,7 @@ export function Philosophy() {
               style={{ ["--reveal-delay" as string]: i * 120 }}
             >
               <span className="eyebrow text-white/60">{String(i + 1).padStart(2, "0")}</span>
-              <h3 className="font-display mt-16 leading-none font-semibold tracking-[-0.04em] text-[var(--step-4)]">
+              <h3 className="font-display mt-16 leading-none font-semibold tracking-[-0.04em] text-[length:var(--step-4)]">
                 {p.word}
                 <span className="text-level">.</span>
               </h3>

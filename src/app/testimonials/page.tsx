@@ -45,7 +45,7 @@ export default function TestimonialsPage() {
                 “
               </span>
               <blockquote
-                className="font-display mt-4 leading-[1.15] font-medium tracking-[-0.025em] text-[var(--step-3)]"
+                className="font-display mt-4 leading-[1.15] font-medium tracking-[-0.025em] text-[length:var(--step-3)]"
                 data-reveal
               >
                 {lead.quote}

@@ -47,7 +47,7 @@ export default function ContactPage() {
                   <dd className="mt-2">
                     <a
                       href={`tel:${site.phone.e164}`}
-                      className="font-display hover:text-graphite font-semibold tracking-tight text-[var(--step-2)]"
+                      className="font-display hover:text-graphite font-semibold tracking-tight text-[length:var(--step-2)]"
                     >
                       {site.phone.display}
                     </a>

@@ -137,7 +137,7 @@ export function FeaturedWork() {
               </span>
             </div>
             <div className="mt-5 flex items-baseline justify-between gap-4">
-              <h3 className="font-display font-semibold tracking-tight text-[var(--step-2)]">
+              <h3 className="font-display font-semibold tracking-tight text-[length:var(--step-2)]">
                 {p.title}
               </h3>
               <span className="eyebrow shrink-0 text-white/50">{p.category}</span>
@@ -150,7 +150,7 @@ export function FeaturedWork() {
           className="group flex w-[60vw] shrink-0 snap-start flex-col justify-center border border-white/15 p-8 sm:w-[40vw] lg:w-[min(26vw,380px)]"
         >
           <span className="eyebrow text-level">The full portfolio</span>
-          <span className="font-display mt-4 leading-none font-semibold tracking-tight text-[var(--step-3)]">
+          <span className="font-display mt-4 leading-none font-semibold tracking-tight text-[length:var(--step-3)]">
             {projects.length} collections
           </span>
           <span className="mt-6 inline-flex items-center gap-3 text-white/70 group-hover:text-white">

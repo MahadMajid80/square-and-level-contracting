@@ -46,7 +46,7 @@ export function IntroStatement() {
             ].map(([n, label]) => (
               <div key={label}>
                 <dt className="sr-only">{label}</dt>
-                <dd className="font-display leading-none font-semibold tracking-tight text-[var(--step-3)]">
+                <dd className="font-display leading-none font-semibold tracking-tight text-[length:var(--step-3)]">
                   {n}
                 </dd>
                 <dd className="text-graphite mt-2 text-sm">{label}</dd>

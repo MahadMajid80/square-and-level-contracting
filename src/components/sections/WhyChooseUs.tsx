@@ -37,7 +37,7 @@ export function WhyChooseUs({ index = "06" }: { index?: string }) {
               data-reveal
               style={{ ["--reveal-delay" as string]: i * 80 }}
             >
-              <summary className="font-display flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-6 font-semibold tracking-tight text-[var(--step-1)]">
+              <summary className="font-display flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-6 font-semibold tracking-tight text-[length:var(--step-1)]">
                 <span className="flex gap-5">
                   <span className="eyebrow text-graphite mt-1.5">
                     {String(i + 1).padStart(2, "0")}

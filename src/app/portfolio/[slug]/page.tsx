@@ -101,7 +101,7 @@ export default async function ProjectPage({ params }: Params) {
                   key={i}
                   className={
                     i === 0
-                      ? "font-display leading-snug font-medium tracking-tight text-[var(--step-2)]"
+                      ? "font-display leading-snug font-medium tracking-tight text-[length:var(--step-2)]"
                       : "text-graphite"
                   }
                   data-reveal
@@ -112,7 +112,7 @@ export default async function ProjectPage({ params }: Params) {
             </div>
             {testimonial && (
               <figure className="border-level mt-12 border-l-2 pl-6" data-reveal>
-                <blockquote className="leading-relaxed text-[var(--step-1)]">
+                <blockquote className="leading-relaxed text-[length:var(--step-1)]">
                   “{testimonial.quote.replace(/^“|”$/g, "")}”
                 </blockquote>
                 <figcaption className="eyebrow text-graphite mt-4">— {testimonial.name}</figcaption>
@@ -161,7 +161,7 @@ export default async function ProjectPage({ params }: Params) {
             <span className="eyebrow text-level inline-flex items-center gap-3">
               {dir === "left" && <Arrow direction="left" />} {label} {dir === "right" && <Arrow />}
             </span>
-            <span className="font-display mt-3 leading-none font-semibold tracking-tight text-[var(--step-3)]">
+            <span className="font-display mt-3 leading-none font-semibold tracking-tight text-[length:var(--step-3)]">
               {proj.title}
             </span>
           </Link>

@@ -98,7 +98,7 @@ export function ServicesIndex() {
                   className="group relative grid grid-cols-[auto_1fr_auto] items-center gap-x-5 gap-y-4 py-7 md:grid-cols-12 md:gap-8 md:py-10"
                 >
                   <span className="eyebrow text-graphite md:col-span-1">{s.number}</span>
-                  <span className="font-display leading-none font-semibold tracking-[-0.035em] text-[var(--step-3)] transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:translate-x-3 md:col-span-6">
+                  <span className="font-display leading-none font-semibold tracking-[-0.035em] text-[length:var(--step-3)] transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:translate-x-3 md:col-span-6">
                     {s.title}
                   </span>
                   <span className="text-graphite col-span-3 row-start-2 text-[0.95rem] md:col-span-4 md:row-start-auto">

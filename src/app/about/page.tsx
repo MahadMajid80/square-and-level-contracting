@@ -83,7 +83,7 @@ export default function AboutPage() {
                 style={{ ["--reveal-delay" as string]: i * 100 }}
               >
                 <span className="eyebrow text-level">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="font-display mt-10 font-semibold tracking-tight text-[var(--step-3)]">
+                <h3 className="font-display mt-10 font-semibold tracking-tight text-[length:var(--step-3)]">
                   {p.word}
                 </h3>
                 <p className="mt-4 text-white/65">{p.text}</p>

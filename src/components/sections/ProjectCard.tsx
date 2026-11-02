@@ -40,7 +40,7 @@ export function ProjectCard({
         </div>
       </div>
       <div className="mt-4 flex items-baseline justify-between gap-4">
-        <H className="font-display font-semibold tracking-tight text-[var(--step-1)]">
+        <H className="font-display font-semibold tracking-tight text-[length:var(--step-1)]">
           <span className="link-draw">{project.title}</span>
         </H>
         <span className={`eyebrow shrink-0 text-[0.62rem] ${muted}`}>{project.category}</span>

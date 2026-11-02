@@ -20,7 +20,7 @@ export default function PrivacyPage() {
       />
       <section className="on-light text-ink py-20 md:py-28">
         <div className="container-x">
-          <div className="text-graphite [&_h2]:font-display [&_h2]:text-ink max-w-2xl space-y-6 text-[1.05rem] leading-relaxed [&_h2]:mt-12 [&_h2]:text-[var(--step-2)]">
+          <div className="text-graphite [&_h2]:font-display [&_h2]:text-ink max-w-2xl space-y-6 text-[1.05rem] leading-relaxed [&_h2]:mt-12 [&_h2]:text-[length:var(--step-2)]">
             <p>
               This policy explains what personal information {site.name} collects through this
               website, and how it is used. We aim to collect as little as possible.

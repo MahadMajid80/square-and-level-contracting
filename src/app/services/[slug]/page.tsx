@@ -67,7 +67,7 @@ export default async function ServicePage({ params }: Params) {
             <ul className="border-ink/15 mt-8 space-y-6 border-t pt-6">
               {s.points.map((pt, i) => (
                 <li key={pt.title} data-reveal style={{ ["--reveal-delay" as string]: i * 80 }}>
-                  <p className="font-display font-semibold tracking-tight text-[var(--step-1)]">
+                  <p className="font-display font-semibold tracking-tight text-[length:var(--step-1)]">
                     <span className="text-level mr-3">■</span>
                     {pt.title}
                   </p>
@@ -82,7 +82,7 @@ export default async function ServicePage({ params }: Params) {
                 key={i}
                 className={
                   i === 0
-                    ? "font-display leading-snug font-medium tracking-tight text-[var(--step-2)]"
+                    ? "font-display leading-snug font-medium tracking-tight text-[length:var(--step-2)]"
                     : "text-graphite text-[1.05rem]"
                 }
                 data-reveal
@@ -141,7 +141,7 @@ export default async function ServicePage({ params }: Params) {
                   open={i === 0}
                   className="group border-ink/15 border-b first:border-t [&_summary::-webkit-details-marker]:hidden"
                 >
-                  <summary className="font-display flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-6 font-semibold tracking-tight text-[var(--step-1)]">
+                  <summary className="font-display flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-6 font-semibold tracking-tight text-[length:var(--step-1)]">
                     {f.q}
                     <span
                       aria-hidden
@@ -170,7 +170,7 @@ export default async function ServicePage({ params }: Params) {
                 >
                   <span className="eyebrow text-level">{o.number}</span>
                   <span className="flex items-end justify-between gap-4">
-                    <span className="font-display leading-tight font-semibold tracking-tight text-[var(--step-2)]">
+                    <span className="font-display leading-tight font-semibold tracking-tight text-[length:var(--step-2)]">
                       {o.title}
                     </span>
                     <Arrow />

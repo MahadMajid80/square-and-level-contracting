@@ -85,7 +85,7 @@ export function ProcessTimeline({ index = "05" }: { index?: string }) {
               </span>
               <div>
                 <p className="eyebrow text-graphite">Stage {s.n}</p>
-                <h3 className="font-display mt-2 font-semibold tracking-[-0.03em] text-[var(--step-3)]">
+                <h3 className="font-display mt-2 font-semibold tracking-[-0.03em] text-[length:var(--step-3)]">
                   {s.title}
                 </h3>
                 <p className="text-graphite mt-3 max-w-md">{s.text}</p>
