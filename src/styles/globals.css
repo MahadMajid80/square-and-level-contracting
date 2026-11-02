@@ -263,3 +263,131 @@
     clip-path: none !important;
   }
 }
+
+/* ── Preloader ─────────────────────────────────────────────────────────── */
+html[data-skip-preloader] #preloader { display: none; }
+html[data-preloading] { overflow: hidden; }
+html[data-preloading] .hero-media img { animation-play-state: paused; }
+
+.pl-root {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  /* Failsafe: if JavaScript never runs, get out of the way after 6s. */
+  animation: pl-failsafe 0.01s linear 6s forwards;
+}
+.pl-sheet {
+  position: absolute;
+  inset: 0;
+  background: var(--color-ink);
+  color: #fff;
+  pointer-events: auto;
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 1.05s var(--ease-in-out-quart);
+}
+.pl-grid { position: absolute; inset: 0; color: #fff; opacity: 0.8; }
+.pl-center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 1.75rem;
+  padding-inline: var(--gutter);
+  transition: opacity 0.5s ease, transform 0.8s var(--ease-out-expo);
+}
+
+/* The spirit-level vial */
+.pl-vial {
+  position: relative;
+  width: min(68vw, 300px);
+  height: 30px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  background: linear-gradient(180deg, rgba(254, 192, 16, 0.08), rgba(254, 192, 16, 0.02));
+  box-shadow: inset 0 0 18px rgba(254, 192, 16, 0.08);
+  opacity: 0;
+  animation: pl-in 0.8s var(--ease-out-expo) 0.05s forwards;
+}
+.pl-tick { position: absolute; top: 4px; bottom: 4px; width: 1.5px; background: rgba(255, 255, 255, 0.45); }
+.pl-tick-l { left: calc(50% - 22.75px); }
+.pl-tick-r { left: calc(50% + 21.25px); }
+.pl-bubble {
+  position: absolute;
+  top: 50%;
+  left: calc(50% - 16px);
+  width: 32px;
+  height: 16px;
+  margin-top: -8px;
+  border-radius: 999px;
+  background: radial-gradient(ellipse at 35% 30%, #fff6cf 0%, var(--color-level) 45%, #d99c00 100%);
+  box-shadow: 0 0 14px rgba(254, 192, 16, 0.55);
+  will-change: transform;
+}
+.pl-root.is-level .pl-tick { background: var(--color-level); transition: background 0.3s; }
+.pl-root.is-level .pl-vial { border-color: var(--color-level); transition: border-color 0.3s; }
+
+.pl-word {
+  display: flex;
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2rem, 1.2rem + 4vw, 4.25rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  padding-bottom: 0.1em;
+}
+.pl-word > span {
+  display: inline-block;
+  transform: translateY(110%);
+  animation: pl-rise 0.9s var(--ease-out-expo) forwards;
+}
+.pl-sub {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-stretch: 112%;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  opacity: 0;
+  animation: pl-in 0.8s var(--ease-out-expo) 0.55s forwards;
+}
+.pl-foot {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-display);
+  transition: opacity 0.4s ease;
+}
+.pl-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+.pl-count {
+  font-size: clamp(2.5rem, 1.5rem + 4vw, 5rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.8;
+  font-variant-numeric: tabular-nums;
+}
+.pl-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255, 255, 255, 0.08); }
+.pl-bar > span { display: block; height: 100%; background: var(--color-level); transform: scaleX(0); transform-origin: left; }
+
+/* Exit: content lifts and fades, then the sheet wipes upward. */
+.pl-root.is-leaving .pl-center { opacity: 0; transform: translateY(-24px); }
+.pl-root.is-leaving .pl-foot { opacity: 0; }
+.pl-root.is-leaving .pl-sheet { clip-path: inset(0 0 100% 0); transition-delay: 0.15s; pointer-events: none; }
+
+@keyframes pl-rise { to { transform: translateY(0); } }
+@keyframes pl-in { to { opacity: 1; } }
+@keyframes pl-failsafe { to { visibility: hidden; opacity: 0; } }

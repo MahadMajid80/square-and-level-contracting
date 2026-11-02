@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
+import { PRELOADED_EVENT } from "../layout/Preloader";
 
 const SELECTOR = "[data-reveal],[data-reveal-clip],[data-reveal-line],[data-split]";
 
@@ -36,13 +37,25 @@ export function RevealRoot() {
         if (!el.classList.contains("is-in")) io.observe(el);
       });
 
-    requestAnimationFrame(observeAll);
+    // While the preloader is up, keep everything in its hidden start state (under the sheet) and
+    // begin revealing the moment the sheet starts to lift, so the hero entrance plays on cue.
+    let waiting = false;
+    const begin = () => requestAnimationFrame(observeAll);
+    if (root.hasAttribute("data-preloading")) {
+      waiting = true;
+      window.addEventListener(PRELOADED_EVENT, begin, { once: true });
+    } else {
+      begin();
+    }
 
     // Catch elements added later (filtered grids, client-only sections).
-    const mo = new MutationObserver(() => observeAll());
+    const mo = new MutationObserver(() => {
+      if (!root.hasAttribute("data-preloading")) observeAll();
+    });
     mo.observe(document.body, { childList: true, subtree: true });
 
     return () => {
+      if (waiting) window.removeEventListener(PRELOADED_EVENT, begin);
       io.disconnect();
       mo.disconnect();
     };

@@ -8,6 +8,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Analytics } from "@/components/layout/Analytics";
 import { RevealRoot } from "@/components/animations/RevealRoot";
+import { Preloader, preloaderBootScript } from "@/components/layout/Preloader";
 import { JsonLd } from "@/components/ui/JsonLd";
 
 export const metadata: Metadata = {
@@ -34,8 +35,18 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-CA" className={`${archivo.variable} ${manrope.variable} ${instrument.variable}`}>
+    <html
+      lang="en-CA"
+      className={`${archivo.variable} ${manrope.variable} ${instrument.variable}`}
+      // The preloader boot script sets data-preloading / data-skip-preloader before hydration.
+      suppressHydrationWarning
+    >
       <body>
+        <script dangerouslySetInnerHTML={{ __html: preloaderBootScript }} />
+        <noscript>
+          <style>{`#preloader{display:none}`}</style>
+        </noscript>
+        <Preloader />
         <a
           href="#main"
           className="bg-level text-ink sr-only z-[100] rounded-full px-5 py-3 font-semibold focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
