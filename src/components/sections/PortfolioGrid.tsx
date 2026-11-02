@@ -7,18 +7,41 @@ import { ProjectCard } from "./ProjectCard";
 
 type Filter = "All" | ProjectCategory;
 
-/** Editorial rhythm: every 5th card is wide, every 7th is tall. Applies on large screens only. */
-function span(i: number) {
-  if (i % 7 === 0) return "lg:col-span-7";
-  if (i % 7 === 1) return "lg:col-span-5 lg:mt-24";
-  if (i % 7 === 4) return "lg:col-span-6";
-  if (i % 7 === 5) return "lg:col-span-6 lg:mt-16";
-  return "lg:col-span-4";
-}
-function aspect(i: number) {
-  if (i % 7 === 0) return "aspect-[4/3]";
-  if (i % 7 === 4 || i % 7 === 5) return "aspect-[5/4]";
-  return "aspect-[4/5]";
+/**
+ * Gap-free editorial grid (large screens). Projects are laid out in rows that always fill all
+ * 12 columns, and every card in a row shares one image height so titles line up:
+ *   cycle of 5 → [wide 7 | 5]  then  [4 | 4 | 4]   (the wide card alternates sides each cycle)
+ * Leftovers: 1 → full width, 2 → [7 | 5], 3 → [4 | 4 | 4], 4 → [6 | 6] [6 | 6].
+ * Phones and tablets use a plain 1–2 column grid with uniform 4:5 images.
+ */
+type Cell = { span: string; height: string };
+const H_PAIR = "lg:h-[min(36vw,560px)]";
+const H_TRIO = "lg:h-[min(30vw,470px)]";
+const H_SOLO = "lg:h-[min(44vw,640px)]";
+
+function buildLayout(n: number): Cell[] {
+  const cells: Cell[] = [];
+  const pair = (flip: boolean) =>
+    (flip ? ["lg:col-span-5", "lg:col-span-7"] : ["lg:col-span-7", "lg:col-span-5"]).forEach(
+      (span) => cells.push({ span, height: H_PAIR }),
+    );
+  const trio = () => {
+    for (let k = 0; k < 3; k++) cells.push({ span: "lg:col-span-4", height: H_TRIO });
+  };
+  let i = 0;
+  let cycle = 0;
+  while (n - i >= 5) {
+    pair(cycle % 2 === 1);
+    trio();
+    i += 5;
+    cycle++;
+  }
+  const r = n - i;
+  if (r === 1) cells.push({ span: "lg:col-span-12", height: H_SOLO });
+  if (r === 2) pair(cycle % 2 === 1);
+  if (r === 3) trio();
+  if (r === 4) for (let k = 0; k < 4; k++) cells.push({ span: "lg:col-span-6", height: H_PAIR });
+  return cells;
 }
 
 /**
@@ -30,6 +53,7 @@ export function PortfolioGrid() {
   const reduce = useReducedMotion();
   const visible = filter === "All" ? projects : projects.filter((p) => p.category === filter);
   const filters: Filter[] = ["All", ...projectCategories];
+  const layout = buildLayout(visible.length);
 
   return (
     <div>
@@ -37,7 +61,8 @@ export function PortfolioGrid() {
         <div
           role="group"
           aria-label="Filter projects by category"
-          className="flex [scrollbar-width:none] gap-2 overflow-x-auto"
+          // Padding stops the scroll container from clipping the buttons' focus outlines.
+          className="-m-1 flex [scrollbar-width:none] gap-2 overflow-x-auto p-1"
         >
           <LayoutGroup id="filters">
             {filters.map((f) => {
@@ -83,7 +108,7 @@ export function PortfolioGrid() {
 
       <motion.ul
         layout={!reduce}
-        className="grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-20"
+        className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-16"
       >
         <AnimatePresence mode="popLayout" initial={false}>
           {visible.map((p, i) => (
@@ -94,11 +119,11 @@ export function PortfolioGrid() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className={filter === "All" ? span(i) : "lg:col-span-4"}
+              className={layout[i]?.span}
             >
               <ProjectCard
                 project={p}
-                aspect={filter === "All" ? aspect(i) : "aspect-[4/5]"}
+                aspect={`aspect-[4/5] lg:aspect-auto ${layout[i]?.height ?? ""}`}
                 sizes="(min-width: 1024px) 45vw, (min-width: 640px) 50vw, 100vw"
                 headingLevel="h2"
               />
