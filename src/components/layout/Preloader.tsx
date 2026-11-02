@@ -1,6 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { brand, media } from "@/lib/images";
+import { site } from "@/lib/site";
 
 export const PRELOADER_KEY = "sl-preloaded";
 export const PRELOADED_EVENT = "sl:preloaded";
@@ -120,6 +123,17 @@ export function Preloader() {
       <div className="pl-sheet">
         <div className="blueprint pl-grid" />
         <div className="pl-center">
+          {/* Original logo artwork on a white plate, same treatment as the header. */}
+          <span className="pl-logo">
+            <Image
+              src={media(brand.logo)}
+              alt={site.name}
+              fill
+              sizes="96px"
+              priority
+              className="object-contain p-1"
+            />
+          </span>
           <div className="pl-vial">
             <span className="pl-tick pl-tick-l" />
             <span className="pl-tick pl-tick-r" />
@@ -127,7 +141,7 @@ export function Preloader() {
           </div>
           <p className="pl-word">
             {WORD.split("").map((c, i) => (
-              <span key={i} style={{ animationDelay: `${120 + i * 38}ms` }}>
+              <span key={i} style={{ animationDelay: `${380 + i * 38}ms` }}>
                 {c === " " ? " " : c}
               </span>
             ))}

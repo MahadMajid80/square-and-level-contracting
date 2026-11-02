@@ -298,6 +298,23 @@ html[data-preloading] .hero-media img { animation-play-state: paused; }
   transition: opacity 0.5s ease, transform 0.8s var(--ease-out-expo);
 }
 
+/* Logo plate: drops in and settles with a slight rotation, then the vial follows. */
+.pl-logo {
+  position: relative;
+  display: block;
+  width: clamp(72px, 9vw, 96px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 18px 40px -12px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transform: translateY(18px) rotate(-6deg) scale(0.92);
+  animation: pl-logo-in 0.9s var(--ease-out-expo) forwards;
+}
+.pl-root.is-level .pl-logo { box-shadow: 0 0 0 2px var(--color-level), 0 18px 40px -12px rgba(0, 0, 0, 0.6); transition: box-shadow 0.3s; }
+@keyframes pl-logo-in { to { opacity: 1; transform: none; } }
+
 /* The spirit-level vial */
 .pl-vial {
   position: relative;
@@ -308,7 +325,7 @@ html[data-preloading] .hero-media img { animation-play-state: paused; }
   background: linear-gradient(180deg, rgba(254, 192, 16, 0.08), rgba(254, 192, 16, 0.02));
   box-shadow: inset 0 0 18px rgba(254, 192, 16, 0.08);
   opacity: 0;
-  animation: pl-in 0.8s var(--ease-out-expo) 0.05s forwards;
+  animation: pl-in 0.8s var(--ease-out-expo) 0.3s forwards;
 }
 .pl-tick { position: absolute; top: 4px; bottom: 4px; width: 1.5px; background: rgba(255, 255, 255, 0.45); }
 .pl-tick-l { left: calc(50% - 22.75px); }
