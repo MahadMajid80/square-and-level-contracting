@@ -1,0 +1,52 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+
+const SELECTOR = "[data-reveal],[data-reveal-clip],[data-reveal-line],[data-split]";
+
+/**
+ * Progressive-enhancement reveal system. Content renders fully visible on the server; once this
+ * mounts it opts the document into the hidden-until-in-view state and observes elements.
+ * Elements already in the viewport are revealed on the next frame, so nothing is ever stuck hidden.
+ */
+export function RevealRoot() {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    root.setAttribute("data-reveal-ready", "");
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-in");
+            io.unobserve(e.target);
+          }
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+    );
+
+    const observeAll = () =>
+      document.querySelectorAll<HTMLElement>(SELECTOR).forEach((el) => {
+        if (!el.classList.contains("is-in")) io.observe(el);
+      });
+
+    requestAnimationFrame(observeAll);
+
+    // Catch elements added later (filtered grids, client-only sections).
+    const mo = new MutationObserver(() => observeAll());
+    mo.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      io.disconnect();
+      mo.disconnect();
+    };
+  }, [pathname]);
+
+  return null;
+}
