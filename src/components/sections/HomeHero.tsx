@@ -1,4 +1,8 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import Link from "next/link";
+import { heroVideo } from "@/data/hero-video";
+import { HeroVideo } from "./HeroVideo";
 import { heroImage, getProject } from "@/data/projects";
 import { services } from "@/data/services";
 import { site } from "@/lib/site";
@@ -7,8 +11,20 @@ import { SplitLines } from "../animations/SplitLines";
 import { ButtonLink } from "../ui/ButtonLink";
 import { Media } from "../ui/Media";
 
+/** Only pass video files that actually exist in /public, checked at build time. */
+function availableVideo() {
+  const has = (p: string) => existsSync(join(process.cwd(), "public", p));
+  return {
+    webm: has(heroVideo.webm) ? heroVideo.webm : undefined,
+    mp4: has(heroVideo.mp4) ? heroVideo.mp4 : undefined,
+    mobileMp4: has(heroVideo.mobileMp4) ? heroVideo.mobileMp4 : undefined,
+  };
+}
+
 export function HomeHero() {
   const project = getProject("reeve-residence");
+  const video = availableVideo();
+  const hasVideo = Boolean(video.webm || video.mp4 || video.mobileMp4);
   return (
     <section
       aria-labelledby="hero-title"
@@ -25,7 +41,13 @@ export function HomeHero() {
             className="hero-media size-full"
           />
         </Parallax>
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(18,19,20,.55)_0%,rgba(18,19,20,.15)_35%,rgba(18,19,20,.35)_60%,rgba(18,19,20,.92)_100%)]" />
+      </div>
+      {/* Layers: photo (-10) → video (-5) → shading (-1) → content. */}
+      {hasVideo && <HeroVideo sources={video} label={heroVideo.label} />}
+      <div aria-hidden className="absolute inset-0 -z-[1]">
+        {/* Extra tint over moving footage keeps the white headline readable on bright frames. */}
+        {hasVideo && <div className="bg-ink/35 absolute inset-0" />}
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(18,19,20,.6)_0%,rgba(18,19,20,.2)_35%,rgba(18,19,20,.4)_60%,rgba(18,19,20,.92)_100%)]" />
         <div className="blueprint absolute inset-0 text-white opacity-60" />
       </div>
 

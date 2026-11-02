@@ -76,6 +76,25 @@ See `.env.example` for the full list.
 
 `NEXT_PUBLIC_*` values are baked in at build time, so redeploy after changing them.
 
+## Hero background video
+
+The homepage hero can play a muted, looping background video over the hero photograph.
+
+1. Get a clip. Your own crew's footage is best: 10–20 seconds, landscape, steady, no text. Free stock that is licensed for commercial use is also available from Mixkit (no credit required).
+2. Run `npm run video:prepare -- path/to/clip.mov`. This needs ffmpeg installed. It writes `public/video/hero-woodworking.mp4`, `-mobile.mp4` and, when smaller, `.webm`. Add `--best` for slower encoding and smaller files.
+3. Commit the files in `public/video/` and redeploy.
+
+With no files present, the hero shows the photo as before.
+
+**Behaviour:**
+- The video loads only after the page and preloader finish.
+- It fades in once it is playing and pauses when scrolled off screen.
+- It has a pause button.
+- It is skipped for reduced-motion visitors and on Data Saver or slow connections.
+- Phones get the 960px file.
+
+Settings are in `src/data/hero-video.ts`.
+
 ## Contact form
 
 `POST /api/contact` sends the enquiry via SMTP, with `Reply-To` set to the visitor so you can answer directly.
