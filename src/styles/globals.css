@@ -181,6 +181,20 @@
     background-size: 100% 1px;
   }
 
+  /* Eased light→dark blend (more stops than a linear gradient, so there is no visible band). */
+  .fade-to-ink {
+    background: linear-gradient(
+      180deg,
+      var(--color-paper-2) 0%,
+      color-mix(in srgb, var(--color-paper-2) 92%, var(--color-ink)) 18%,
+      color-mix(in srgb, var(--color-paper-2) 72%, var(--color-ink)) 38%,
+      color-mix(in srgb, var(--color-paper-2) 44%, var(--color-ink)) 58%,
+      color-mix(in srgb, var(--color-paper-2) 18%, var(--color-ink)) 78%,
+      color-mix(in srgb, var(--color-paper-2) 5%, var(--color-ink)) 92%,
+      var(--color-ink) 100%
+    );
+  }
+
   .media-fallback {
     background: linear-gradient(135deg, var(--color-ink-3), var(--color-ink-2));
   }

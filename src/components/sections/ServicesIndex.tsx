@@ -61,7 +61,7 @@ export function ServicesIndex() {
   return (
     <section
       aria-labelledby="services-title"
-      className="on-light bg-paper-2 text-ink py-24 md:py-36"
+      className="on-light bg-paper-2 text-ink pt-24 md:pt-36"
     >
       <div className="container-x">
         <div className="grid gap-8 md:grid-cols-12 md:items-end">
@@ -98,7 +98,7 @@ export function ServicesIndex() {
                   className="group relative grid grid-cols-[auto_1fr_auto] items-center gap-x-5 gap-y-4 py-7 md:grid-cols-12 md:gap-8 md:py-10"
                 >
                   <span className="eyebrow text-graphite md:col-span-1">{s.number}</span>
-                  <span className="font-display leading-none font-semibold tracking-[-0.035em] text-[length:var(--step-3)] transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:translate-x-3 md:col-span-6">
+                  <span className="font-display text-[length:var(--step-3)] leading-none font-semibold tracking-[-0.035em] transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:translate-x-3 md:col-span-6">
                     {s.title}
                   </span>
                   <span className="text-graphite col-span-3 row-start-2 text-[0.95rem] md:col-span-4 md:row-start-auto">
@@ -157,6 +157,8 @@ export function ServicesIndex() {
           )}
         </div>
       </div>
+      {/* Eased fade from the light section into the dark "Selected work" section below. */}
+      <div aria-hidden className="fade-to-ink mt-12 h-44 md:mt-24 md:h-72" />
     </section>
   );
 }

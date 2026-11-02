@@ -86,7 +86,7 @@ export function FeaturedWork() {
       <section
         ref={sectionRef}
         aria-labelledby="work-title"
-        className="bg-ink relative overflow-hidden py-20 text-white lg:flex lg:h-[100svh] lg:flex-col lg:justify-center lg:py-0"
+        className="bg-ink relative overflow-hidden py-20 text-white lg:flex lg:h-[100svh] lg:flex-col lg:justify-center lg:pt-[calc(var(--header-h)+1rem)] lg:pb-8"
       >
         <div className="container-x flex flex-wrap items-end justify-between gap-6">
           <div>
@@ -117,9 +117,9 @@ export function FeaturedWork() {
             <Link
               key={p.slug}
               href={`/portfolio/${p.slug}`}
-              className="group relative w-[82vw] shrink-0 snap-start sm:w-[58vw] lg:w-[min(38vw,560px)]"
+              className="group relative w-[82vw] shrink-0 snap-start sm:w-[58vw] lg:w-auto"
             >
-              <div className="relative aspect-[4/5] overflow-hidden lg:aspect-[5/6]">
+              <div className="relative aspect-[4/5] overflow-hidden lg:aspect-[5/6] lg:h-[min(54svh,600px)]">
                 <div data-card-img className="absolute -inset-x-[10%] inset-y-0">
                   <div className="media-fallback relative size-full">
                     <Image
@@ -145,7 +145,9 @@ export function FeaturedWork() {
                 </h3>
                 <span className="eyebrow shrink-0 text-white/50">{p.category}</span>
               </div>
-              <p className="mt-2 max-w-md text-[0.95rem] text-white/60">{p.summary}</p>
+              <p className="mt-2 max-w-md text-[0.95rem] text-white/60 lg:max-w-[min(45svh,500px)]">
+                {p.summary}
+              </p>
             </Link>
           ))}
           <Link
