@@ -14,13 +14,13 @@ VF="scale='min(1920,iw)':-2,fps=30"
 VFM="scale='min(960,iw)':-2,fps=30"
 
 echo "→ Desktop MP4 (H.264)"
-ffmpeg -y -loglevel error -i "$IN" -t $MAXLEN -an -vf "$VF" -c:v libx264 -preset $PRESET -crf 26 \
+ffmpeg -y -loglevel error -i "$IN" -map 0:v:0 -t $MAXLEN -an -dn -map_metadata -1 -vf "$VF" -c:v libx264 -preset $PRESET -crf 26 \
   -profile:v high -pix_fmt yuv420p -movflags +faststart "$OUT/hero-woodworking.mp4"
 echo "→ Desktop WebM (VP9)"
-ffmpeg -y -loglevel error -i "$IN" -t $MAXLEN -an -vf "$VF" -c:v libvpx-vp9 -b:v 0 -crf 36 \
+ffmpeg -y -loglevel error -i "$IN" -map 0:v:0 -t $MAXLEN -an -dn -map_metadata -1 -vf "$VF" -c:v libvpx-vp9 -b:v 0 -crf 36 \
   -deadline $DEADLINE -cpu-used $CPU -row-mt 1 "$OUT/hero-woodworking.webm"
 echo "→ Mobile MP4 (960px)"
-ffmpeg -y -loglevel error -i "$IN" -t $MAXLEN -an -vf "$VFM" -c:v libx264 -preset $PRESET -crf 28 \
+ffmpeg -y -loglevel error -i "$IN" -map 0:v:0 -t $MAXLEN -an -dn -map_metadata -1 -vf "$VFM" -c:v libx264 -preset $PRESET -crf 28 \
   -profile:v main -pix_fmt yuv420p -movflags +faststart "$OUT/hero-woodworking-mobile.mp4"
 
 # Keep the WebM only if it actually beats the MP4 (fast VP9 encodes sometimes don't).

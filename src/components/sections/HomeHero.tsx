@@ -53,7 +53,7 @@ export function HomeHero() {
 
       <div className="container-x flex flex-1 flex-col justify-end pt-[calc(var(--header-h)+3rem)] pb-10 md:pb-14">
         <div
-          className="mb-8 flex items-center gap-4"
+          className="mb-8 flex items-center gap-4 pr-14 md:pr-0"
           data-reveal
           style={{ ["--reveal-delay" as string]: 200 }}
         >
